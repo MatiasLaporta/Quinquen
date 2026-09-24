@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A single-page commercial proposal ("Propuesta Kargo-Log") for the client Sergio Cachay / Kargo-Log, built as a static Astro site styled like an executive dashboard. It is deployed to GitHub Pages at the custom domain **kargo-log.matiaslaporta.com**. SEO is intentionally omitted — this is a private proposal, not an indexed site.
+A single-page commercial proposal ("Propuesta Kargo-Log") for the client Sergio Cachay / Kargo-Log, built as a static Astro site styled like an executive dashboard. It is deployed to GitHub Pages at the custom domain **quinquen.matiaslaporta.com**. SEO is intentionally omitted — this is a private proposal, not an indexed site.
 
 ## Commands
 
@@ -53,6 +53,6 @@ Push to `main` → `.github/workflows/deploy.yml` (uses `withastro/action`) buil
 
 **Asset naming gotcha:** GitHub Pages serves on Linux (case-sensitive). Files in `public/` referenced from markup must use **lowercase, no-spaces** names (e.g. `logo-kargo-log.png`, not `Logo Kargo-Log.png`) or they 404 in production while working locally on Windows.
 
-The repo is `MatiasLaporta/kargo-log-propuesta`; the git identity for commits is `MatiasLaporta` / `matias@digitals.cl`.
+The repo is `MatiasLaporta/Quinquen`; the git identity for commits is `MatiasLaporta` / `matias@digitals.cl`.
 
 **Windows/PowerShell commit gotcha:** commit messages with accented characters (`ó`, `ñ`, …) passed via a PowerShell here-string get mangled. Write the message to a file and use `git commit -F <file>` instead.
