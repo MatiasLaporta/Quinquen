@@ -10,7 +10,8 @@ import "../styles/global.css";
 const tabs = [
   { id: "diagnostico", n: "01", label: "Diagnóstico y Contexto" },
   { id: "soluciones",  n: "02", label: "El Sistema (Soluciones)" },
-  { id: "inversion",   n: "03", label: "Inversión y Cronograma" },
+  { id: "ads",         n: "03", label: "Inversión en Ads" },
+  { id: "inversion",   n: "04", label: "Inversión y Cronograma" },
 ];
 
 // --- Datos del embudo (centralizados para edición rápida) -------------------
@@ -68,7 +69,7 @@ const modulos = [
       "Segmentación Amplia por Comportamiento: Configurar el targeting apuntando a intereses afines, dejando que el algoritmo busque la demanda latente.",
       "Recepción y tracking de Leads: Estos podrían llegar por múltiples vías, incluyendo configuración de formularios, pixel, etc.",
     ],
-    bonus: "Auditoría y corrección de la configuración de Tik Tok for Business. En caso de no existir se realizaría las gestiones como parte del plan.",
+    bonus: "Auditoría y corrección de la configuración de TikTok for Business. En caso de no existir se realizaría las gestiones como parte del plan.",
   },
   {
     n: "06",
@@ -82,32 +83,94 @@ const modulos = [
   },
 ];
 
-// Precios en CLP. tipo "mensual" recibe el descuento de los meses 1 a 3; "unico" no.
+// --- Tab 03 · Inversión en Ads (proyección de presupuesto) -------------------
+// Cada desplegable tiene "escenarios" (título + puntos + nota) o solo "puntos".
+const modulosAds = [
+  {
+    n: "01",
+    titulo: "Meta Ads",
+    escenarios: [
+      {
+        titulo: "1. Escenario Ideal (Máxima Eficiencia - 5% de Conversión)",
+        puntos: [
+          "Leads necesarios: 2.000 leads mensuales.",
+          "CPL Proyectado: $1.500 a $2.000 CLP (posible gracias al alto CTR de tu oferta y el refresco de los ciclones).",
+          "Presupuesto Mínimo Requerido: $3.000.000 a $4.000.000 CLP mensuales (Aprox. $3.300 a $4.500 USD).",
+        ],
+        nota: "Este es el escenario donde todo funciona perfecto, los reels se viralizan y la IA de Meta encuentra rápido tu nicho gracias a la CAPI.",
+      },
+      {
+        titulo: "2. Escenario de Preventivo (Conservador - 3% de Conversión)",
+        puntos: [
+          "Leads necesarios: 3.333 leads mensuales.",
+          "CPL Proyectado: $2.500 a $3.000 CLP (si la competencia sube la puja o algunos creativos del ciclón no traccionan tan bien).",
+          "Presupuesto Máximo/Recomendado: $8.300.000 a $10.000.000 CLP mensuales (Aprox. $9.000 a $11.000 USD).",
+        ],
+        nota: "Este es el presupuesto que salva los resultados si la tasa de conversión sufre fluctuaciones o si el equipo comercial falla en el cierre.",
+      },
+    ],
+  },
+  {
+    n: "02",
+    titulo: "TikTok Ads",
+    escenarios: [
+      {
+        titulo: "1. Escenario Optimista (2.5% de Conversión)",
+        puntos: [
+          "Leads necesarios: 4.000 leads mensuales.",
+          "CPL Proyectado: $1.000 a $1.200 CLP.",
+          "Presupuesto Mínimo Requerido: $4.000.000 a $4.800.000 CLP mensuales (Aprox. $4.400 a $5.300 USD).",
+        ],
+        nota: "Este escenario asume que la IA en SaaS está optimizada y funcionando en perfectas condiciones.",
+      },
+      {
+        titulo: "2. Escenario de Seguridad / Realista (1.5% de Conversión)",
+        puntos: [
+          "Leads necesarios: 6.666 leads mensuales.",
+          "CPL Proyectado: $1.300 a $1.500 CLP.",
+          "Presupuesto Máximo/Recomendado: $8.600.000 a $10.000.000 CLP mensuales (Aprox. $9.500 a $11.000 USD).",
+        ],
+        nota: "Si quieres asegurar tu meta y no depender de que un video se haga viral de casualidad, este es el número real. Vas a necesitar inyectar miles de leads para compensar la baja calidad del tráfico.",
+      },
+    ],
+  },
+  {
+    n: "03",
+    titulo: "Conclusiones iniciales",
+    puntos: [
+      "De tener que elegir entre uno de los 2, sin duda elegiría Meta Ads. Se proyecta requerir menos leads para llegar al mismo resultado de 100 ventas mensuales.",
+      "TikTok Ads puede traer más trafico, pero menos calificado aumentando el costo de los Agentes de IA o el tiempo invertido por el equipo comercial.",
+      "No descarto TikTok Ads de plano ya que podemos apuntar a un público más joven y tiene mayor potencial a ser viral.",
+      "En caso de utilizar ambos, dividiría el presupuesto de la siguiente forma: 2/3 Meta Ads y 1/3 TikTok Ads.",
+    ],
+  },
+];
+
+// Precios en CLP (netos). tipo "mensual" suma a la mensualidad; "unico" va aparte.
 // Un módulo con varias opciones se elige como una sola (se excluyen entre sí).
 const precios = [
-  { n: "01", item: "Meta Ads", tipo: "mensual", opciones: [{ clp: 300000 }] },
+  { n: "01", item: "Meta Ads", tipo: "mensual", opciones: [{ clp: 550000 }] },
   {
     n: "02",
     item: "Gestión de Redes Sociales",
     tipo: "mensual",
     opciones: [
-      { label: "8 Reels + 4 Post", clp: 350000 },
-      { label: "12 Reels + 8 Post", clp: 450000 },
+      { label: "8 Reels + 4 Post", clp: 450000 },
+      { label: "12 Reels + 8 Posts", clp: 600000 },
     ],
   },
-  { n: "03", item: "Implementación SaaS", tipo: "unico", opciones: [{ clp: 850000 }] },
+  { n: "03", item: "Implementación SaaS", tipo: "unico", opciones: [{ clp: 900000 }] },
   { n: "04", item: "Mantención SaaS", tipo: "mensual", opciones: [{ clp: 150000 }] },
-  { n: "05", item: "TikTok Ads", tipo: "mensual", opciones: [{ clp: 350000 }] },
-  { n: "06", item: "Asesoría Comercial", tipo: "mensual", opciones: [{ clp: 200000 }] },
+  { n: "05", item: "TikTok Ads", tipo: "mensual", opciones: [{ clp: 650000 }] },
+  { n: "06", item: "Asesoría Comercial", tipo: "mensual", opciones: [{ clp: 300000 }] },
 ];
 const clp = (n) => "$" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const sufijo = (tipo) => (tipo === "mensual" ? "/ mes" : "pago único");
 
 const cronograma = [
   { semana: "Semana 1", hito: "Firma del contrato, pago de honorarios y análisis e investigación del caso." },
-  { semana: "Semana 2", hito: "Entrega de la planificación de los servicios contratados." },
-  { semana: "Semana 3", hito: "Ajustes según feedback del cliente." },
-  { semana: "Semanas 4–8", hito: "Implementación y acompañamiento." },
+  { semana: "Semana 2", hito: "Entrega de la planificación de los servicios contratados y Ajustes según feedback." },
+  { semana: "Semanas 3–8", hito: "Implementación y acompañamiento." },
   { semana: "Semanas 9–12", hito: "Análisis y optimización." },
 ];
 ---
@@ -397,6 +460,79 @@ const cronograma = [
         </section>
 
         <!-- ============================ TAB 03 ============================ -->
+        <!-- INVERSIÓN EN ADS (proyección de presupuesto por plataforma)       -->
+        <section data-panel="ads" class="hidden">
+          <p class="text-sm font-semibold tracking-widest text-cyan-400 uppercase">
+            Background y Proyección
+          </p>
+          <h2 class="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <span class="text-yellow-400">Diesel</span> para el sistema de prospección.
+          </h2>
+          <div class="mt-6 max-w-3xl space-y-4 text-base leading-relaxed text-slate-400 lg:text-lg">
+            <p>
+              Considerando una oferta de consumo masivo debido a la flexibilidad de financiamiento y
+              acceso a crédito, además de un sistema de seguimiento efectivo, la tasa de conversión
+              debería ser mayor al promedio.
+            </p>
+            <p>
+              Considerando todos los parámetros del proyecto se han realizado estimaciones con
+              herramientas digitales y algoritmos predictivos para llegar a la siguiente proyección:
+            </p>
+          </div>
+          <div class="mt-12 space-y-4">
+            {
+              modulosAds.map((m) => (
+                <details class="group rounded-xl border border-slate-800 bg-[#0b0f19]/60 transition duration-300 hover:border-yellow-400/40 hover:shadow-[0_0_35px_-8px_rgba(250,204,21,0.45)] open:border-yellow-400/30">
+                  <summary class="flex cursor-pointer items-center gap-4 p-6 sm:gap-6">
+                    <span class="font-mono text-2xl font-bold text-cyan-400/80 tabular-nums">
+                      {m.n}
+                    </span>
+                    <h3 class="flex-1 text-lg font-semibold text-white lg:text-xl">{m.titulo}</h3>
+                    <svg
+                      class="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-300 group-open:rotate-180"
+                      viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                    >
+                      <path d="M6 8l4 4 4-4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="px-6 pb-6">
+                    <div class="space-y-7 border-t border-slate-800/80 pt-5">
+                      {m.escenarios?.map((e) => (
+                        <div>
+                          <h4 class="text-base font-semibold text-white lg:text-lg">{e.titulo}</h4>
+                          <ul class="mt-3 space-y-2.5">
+                            {e.puntos.map((p) => (
+                              <li class="flex gap-3 text-sm leading-relaxed text-slate-400 lg:text-base">
+                                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400/70" />
+                                <span>{p}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          <p class="mt-4 inline-flex flex-wrap items-baseline gap-2 rounded-lg border border-yellow-400/20 bg-yellow-400/5 px-3 py-1.5 text-sm">
+                            <span class="text-xs font-bold tracking-wide text-yellow-400 uppercase">Nota</span>
+                            <span class="text-slate-300">{e.nota}</span>
+                          </p>
+                        </div>
+                      ))}
+                      {m.puntos && (
+                        <ul class="space-y-2.5">
+                          {m.puntos.map((p) => (
+                            <li class="flex gap-3 text-sm leading-relaxed text-slate-400 lg:text-base">
+                              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400/70" />
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </details>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- ============================ TAB 04 ============================ -->
         <section data-panel="inversion" class="hidden">
           <p class="text-sm font-semibold tracking-widest text-cyan-400 uppercase">
             Inversión
@@ -469,86 +605,71 @@ const cronograma = [
               </ul>
             </div>
 
-            <!-- Resumen + ofertas -->
-            <div class="flex min-w-0 flex-col gap-4">
-              <div class="flex-1 rounded-xl border border-yellow-400/50 bg-gradient-to-b from-yellow-400/10 to-[#0b0f19]/60 p-5 transition duration-300 hover:border-cyan-400/60 hover:shadow-[0_0_35px_-8px_rgba(34,211,238,0.45)]">
-                <h3 class="text-base font-semibold text-yellow-400">Tu inversión</h3>
-                <p class="mt-1 text-sm text-slate-400">
-                  <span id="calc-count" class="text-slate-200">5</span> módulos mensuales seleccionados
+            <!-- Resumen (misma altura que "Arma tu plan") -->
+            <div class="flex min-w-0 flex-col rounded-xl border border-yellow-400/50 bg-gradient-to-b from-yellow-400/10 to-[#0b0f19]/60 p-5 transition duration-300 hover:border-cyan-400/60 hover:shadow-[0_0_35px_-8px_rgba(34,211,238,0.45)] sm:p-7">
+              <h3 class="text-base font-semibold text-yellow-400">Tu inversión</h3>
+              <p class="mt-1 text-sm text-slate-400">
+                <span id="calc-count" class="text-slate-200">5</span> módulos mensuales seleccionados
+              </p>
+
+              <div class="mt-6 border-t border-slate-700 pt-5">
+                <p class="text-xs font-semibold tracking-widest text-slate-400 uppercase">Mensualidad</p>
+                <p class="mt-1 flex flex-wrap items-baseline gap-x-2">
+                  <span id="calc-mensual" class="text-3xl font-bold text-white tabular-nums">$0</span>
+                  <span class="text-sm text-slate-400">/ mes</span>
                 </p>
-                <dl class="mt-4 space-y-2 text-sm">
-                  <div class="flex items-baseline justify-between gap-4">
-                    <dt class="text-slate-400">Servicios mensuales</dt>
-                    <dd id="calc-mensual" class="font-semibold text-white tabular-nums">$0</dd>
-                  </div>
-                  <div id="calc-desc-row" class="flex items-baseline justify-between gap-4">
-                    <dt class="text-slate-400">Descuento por 3 meses (<span id="calc-pct">0</span>%)</dt>
-                    <dd id="calc-desc" class="font-semibold text-yellow-400 tabular-nums">$0</dd>
-                  </div>
-                </dl>
-                <div class="mt-4 border-t border-slate-700 pt-3">
-                  <p class="text-xs font-semibold tracking-widest text-slate-400 uppercase">Mensualidad · meses 1 a 3</p>
-                  <p class="mt-1 flex flex-wrap items-baseline gap-x-2">
-                    <span id="calc-primer" class="text-3xl font-bold text-white tabular-nums">$0</span>
-                    <span class="text-sm text-slate-400">CLP</span>
-                    <span id="calc-bruto" class="text-sm text-slate-500 line-through tabular-nums"></span>
+              </div>
+
+              <div id="calc-unico-row" class="mt-5 flex items-baseline justify-between gap-4 border-t border-slate-700 pt-4 text-sm">
+                <span class="text-slate-400">
+                  Pago único
+                  <span class="block text-xs text-slate-500">Implementación SaaS</span>
+                </span>
+                <span id="calc-unico" class="font-semibold text-white tabular-nums">$0</span>
+              </div>
+
+              <!-- Métodos de pago + Términos y condiciones -->
+              <div class="mt-auto pt-6">
+                <div class="border-t border-slate-700 pt-4">
+                  <p class="text-[11px] font-semibold tracking-widest text-slate-500 uppercase">
+                    Métodos de pago
                   </p>
-                  <p class="mt-1 text-sm text-slate-400">
-                    Desde el 4º mes: <span id="calc-resto" class="font-semibold text-slate-200 tabular-nums">$0</span> / mes
+                  <ul class="mt-2 space-y-1 text-xs leading-relaxed text-slate-500">
+                    {
+                      [
+                        "Transferencia bancaria",
+                        "Tarjeta de crédito (cuotas / suscripción)",
+                        "Criptomonedas (BTC y stablecoins L2)",
+                      ].map((t) => (
+                        <li class="flex gap-2">
+                          <span class="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-slate-500" />
+                          <span>{t}</span>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                <div class="mt-4 border-t border-slate-700 pt-4">
+                  <p class="text-[11px] font-semibold tracking-widest text-slate-500 uppercase">
+                    Términos y condiciones
                   </p>
-                </div>
-                <div id="calc-unico-row" class="mt-4 flex items-baseline justify-between gap-4 border-t border-slate-700 pt-3 text-sm">
-                  <span class="text-slate-400">
-                    Pago único
-                    <span class="block text-xs text-slate-500">Implementación SaaS · sin descuento</span>
-                  </span>
-                  <span id="calc-unico" class="font-semibold text-white tabular-nums">$0</span>
+                  <ul class="mt-2 space-y-1 text-xs leading-relaxed text-slate-500">
+                    {
+                      [
+                        "Precios Netos en CLP",
+                        "Emisión de Boleta de honorarios",
+                        "Contrato de prestaciones de servicios",
+                        "Pago en Ads se aplica directamente en la plataforma",
+                      ].map((t) => (
+                        <li class="flex gap-2">
+                          <span class="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-slate-500" />
+                          <span>{t}</span>
+                        </li>
+                      ))
+                    }
+                  </ul>
                 </div>
               </div>
-
-              <div data-offer="15" class="group rounded-xl border border-slate-800 bg-[#0b0f19]/60 p-4 transition duration-300 data-[on=true]:border-yellow-400/50 data-[on=true]:bg-yellow-400/5">
-                <div class="flex items-center justify-between gap-3">
-                  <h3 class="min-w-0 text-base font-semibold text-white group-data-[on=true]:text-yellow-400">Paquete 3+ módulos</h3>
-                  <span class="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-xs font-bold whitespace-nowrap text-slate-300 transition group-data-[on=true]:bg-yellow-400 group-data-[on=true]:text-slate-900">
-                    15% OFF
-                  </span>
-                </div>
-                <p class="mt-1 text-sm text-slate-400">
-                  15% sobre la mensualidad de los primeros 3 meses.
-                </p>
-              </div>
-
-              <div data-offer="30" class="group rounded-xl border border-slate-800 bg-[#0b0f19]/60 p-4 transition duration-300 data-[on=true]:border-yellow-400/50 data-[on=true]:bg-yellow-400/5">
-                <div class="flex items-center justify-between gap-3">
-                  <h3 class="min-w-0 text-base font-semibold text-white group-data-[on=true]:text-yellow-400">Full Stack · 5 módulos mensuales</h3>
-                  <span class="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-xs font-bold whitespace-nowrap text-slate-300 transition group-data-[on=true]:bg-yellow-400 group-data-[on=true]:text-slate-900">
-                    30% OFF
-                  </span>
-                </div>
-                <p class="mt-1 text-sm text-slate-400">
-                  30% sobre la mensualidad de los primeros 3 meses.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Métodos de pago -->
-          <div class="mt-8">
-            <h3 class="text-xs font-semibold tracking-widest text-cyan-400 uppercase">
-              Métodos de pago
-            </h3>
-            <div class="mt-5 flex flex-wrap gap-3">
-              {
-                [
-                  "Transferencia bancaria",
-                  "Tarjeta de crédito (cuotas / suscripción)",
-                  "Criptomonedas (BTC y stablecoins L2)",
-                ].map((m) => (
-                  <span class="rounded-lg border border-slate-800 bg-[#0b0f19]/60 px-4 py-2 text-sm text-slate-300 transition duration-300 hover:border-yellow-400/40 hover:shadow-[0_0_25px_-8px_rgba(250,204,21,0.45)]">
-                    {m}
-                  </span>
-                ))
-              }
             </div>
           </div>
 
@@ -808,42 +929,28 @@ const cronograma = [
 
       // ====================================================================
       //  CALCULADORA DE INVERSIÓN (Tab 4)
-      //  Solo los módulos mensuales cuentan y se descuentan (meses 1 a 3):
-      //  3–4 mensuales = 15% · todos los mensuales (Full Stack) = 30%.
-      //  El pago único (Implementación SaaS) va aparte, sin descuento.
+      //  Mensualidad = suma de los módulos mensuales marcados.
+      //  El pago único (Implementación SaaS) se muestra aparte.
       // ====================================================================
       (() => {
         const opts = [...document.querySelectorAll(".calc-opt")];
         if (!opts.length) return;
-        const mods = (list) =>
-          new Set(list.filter((o) => o.dataset.tipo === "mensual").map((o) => o.dataset.mod)).size;
-        const TOTAL_MODS = mods(opts);
         const fmt = (n) => "$" + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         const $ = (id) => document.getElementById(id);
 
         function update() {
           const sel = opts.filter((o) => o.checked);
-          const count = mods(sel);
+          const count = new Set(
+            sel.filter((o) => o.dataset.tipo === "mensual").map((o) => o.dataset.mod)
+          ).size;
           const sum = (tipo) =>
             sel.filter((o) => o.dataset.tipo === tipo).reduce((t, o) => t + Number(o.dataset.clp), 0);
-          const mensual = sum("mensual");
           const unico = sum("unico");
-          const pct = count >= TOTAL_MODS ? 30 : count >= 3 ? 15 : 0;
-          const desc = (mensual * pct) / 100;
 
           $("calc-count").textContent = count;
-          $("calc-mensual").textContent = fmt(mensual);
+          $("calc-mensual").textContent = fmt(sum("mensual"));
           $("calc-unico").textContent = fmt(unico);
           $("calc-unico-row").classList.toggle("hidden", unico === 0);
-          $("calc-pct").textContent = pct;
-          $("calc-desc").textContent = "-" + fmt(desc);
-          $("calc-desc-row").classList.toggle("hidden", pct === 0);
-          $("calc-primer").textContent = fmt(mensual - desc);
-          $("calc-bruto").textContent = pct ? fmt(mensual) : "";
-          $("calc-resto").textContent = fmt(mensual);
-          document.querySelectorAll("[data-offer]").forEach((el) => {
-            el.dataset.on = String(Number(el.dataset.offer) === pct);
-          });
         }
 
         opts.forEach((o) =>
