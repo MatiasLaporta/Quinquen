@@ -160,12 +160,19 @@ const precios = [
     ],
   },
   { n: "03", item: "Implementación SaaS", tipo: "unico", opciones: [{ clp: 900000 }] },
-  { n: "04", item: "Mantención SaaS", tipo: "mensual", opciones: [{ clp: 150000 }] },
+  { n: "04", item: "Mantención SaaS", nota: "No incluye el pago del SaaS", tipo: "mensual", opciones: [{ clp: 150000 }] },
   { n: "05", item: "TikTok Ads", tipo: "mensual", opciones: [{ clp: 650000 }] },
   { n: "06", item: "Asesoría Comercial", tipo: "mensual", opciones: [{ clp: 300000 }] },
 ];
 const clp = (n) => "$" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const sufijo = (tipo) => (tipo === "mensual" ? "/ mes" : "pago único");
+
+// --- Inversión total · presupuesto mensual en Ads según nivel y plataformas ---
+const nivelesAds = [
+  { label: "Mínimo (Arriesgado)", color: "bg-red-500", meta: 3000000, tiktok: 4000000, ambos: 4000000 },
+  { label: "Punto Medio (Min. Viable)", color: "bg-yellow-400", meta: 7000000, tiktok: 8000000, ambos: 8000000 },
+  { label: "Recomendado (Máximo)", color: "bg-lime-400", meta: 10000000, tiktok: 10000000, ambos: 10000000 },
+];
 
 const cronograma = [
   { semana: "Semana 1", hito: "Firma del contrato, pago de honorarios y análisis e investigación del caso." },
@@ -564,7 +571,10 @@ const cronograma = [
                             checked
                           />
                           <span class="font-mono text-xs text-cyan-400/80 tabular-nums">{m.n}</span>
-                          <span class="min-w-0 flex-1 text-sm text-slate-300">{m.item}</span>
+                          <span class="min-w-0 flex-1 text-sm text-slate-300">
+                            {m.item}
+                            {m.nota && <span class="block text-[11px] text-slate-500">{m.nota}</span>}
+                          </span>
                           <span class="shrink-0 text-right whitespace-nowrap">
                             <span class="font-semibold text-white tabular-nums">{clp(m.opciones[0].clp)}</span>
                             <span class="block text-[11px] text-slate-500 sm:ml-1.5 sm:inline sm:text-xs">{sufijo(m.tipo)}</span>
@@ -669,6 +679,77 @@ const cronograma = [
                     }
                   </ul>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inversión total = inversión en Ads + mensualidad -->
+          <div class="mt-6 min-w-0 rounded-xl border border-cyan-400/40 bg-[#0b0f19]/60 p-5 transition duration-300 hover:border-cyan-400/60 hover:shadow-[0_0_35px_-8px_rgba(34,211,238,0.45)] sm:px-7 sm:py-4">
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[auto_auto_1fr_1fr] lg:gap-0 lg:divide-x lg:divide-slate-800">
+              <!-- Elige tu Ads (sincronizado con "Arma tu plan") -->
+              <div class="min-w-0 lg:pr-7">
+                <p class="text-[11px] font-semibold tracking-widest text-slate-400 uppercase">Elige tu Ads</p>
+                <div class="mt-2 space-y-1">
+                  {
+                    precios
+                      .filter((m) => m.item.endsWith("Ads"))
+                      .map((m) => (
+                        <label class="flex cursor-pointer items-center gap-3 text-sm text-slate-300 opacity-50 transition has-checked:opacity-100">
+                          <input
+                            type="checkbox"
+                            class="ads-opt h-4 w-4 shrink-0 cursor-pointer accent-yellow-400"
+                            data-mod={m.n}
+                            data-plat={m.item.startsWith("Meta") ? "meta" : "tiktok"}
+                          />
+                          {m.item}
+                        </label>
+                      ))
+                  }
+                </div>
+              </div>
+
+              <!-- Nivel de inversión -->
+              <div class="min-w-0 lg:px-7">
+                <p class="text-[11px] font-semibold tracking-widest text-slate-400 uppercase">Elige tu nivel de inversión</p>
+                <div class="mt-2 space-y-1">
+                  {
+                    nivelesAds.map((l, i) => (
+                      <label class="flex cursor-pointer items-center gap-3 text-sm text-slate-300 opacity-50 transition has-checked:opacity-100">
+                        <input
+                          type="radio"
+                          name="nivel-ads"
+                          class="nivel-opt h-4 w-4 shrink-0 cursor-pointer accent-yellow-400"
+                          data-meta={l.meta}
+                          data-tiktok={l.tiktok}
+                          data-ambos={l.ambos}
+                          checked={i === nivelesAds.length - 1}
+                        />
+                        <span class={`h-2.5 w-2.5 shrink-0 rounded-sm ${l.color}`} />
+                        <span class="whitespace-nowrap">{l.label}</span>
+                      </label>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <!-- Monto de inversión en Ads -->
+              <div class="min-w-0 lg:px-7">
+                <p class="text-[11px] font-semibold tracking-widest text-slate-400 uppercase">Monto de inversión en Ads</p>
+                <p class="mt-2.5 flex flex-wrap items-baseline gap-x-2">
+                  <span id="ads-monto" class="text-2xl font-bold text-white tabular-nums">$0</span>
+                  <span class="text-sm text-slate-400">/ mes</span>
+                </p>
+                <p id="ads-split" class="mt-1 text-[11px] text-slate-500 tabular-nums"></p>
+              </div>
+
+              <!-- Monto total mensual -->
+              <div class="min-w-0 lg:pl-7">
+                <p class="text-[11px] font-semibold tracking-widest text-slate-400 uppercase">Monto total mensual</p>
+                <p class="mt-2.5 flex flex-wrap items-baseline gap-x-2">
+                  <span id="ads-total" class="text-2xl font-bold text-yellow-400 tabular-nums">$0</span>
+                  <span class="text-sm text-slate-400">/ mes</span>
+                </p>
+                <p class="mt-1 text-xs text-slate-500">Ads + mensualidad</p>
               </div>
             </div>
           </div>
@@ -946,12 +1027,46 @@ const cronograma = [
           const sum = (tipo) =>
             sel.filter((o) => o.dataset.tipo === tipo).reduce((t, o) => t + Number(o.dataset.clp), 0);
           const unico = sum("unico");
+          const mensual = sum("mensual");
 
           $("calc-count").textContent = count;
-          $("calc-mensual").textContent = fmt(sum("mensual"));
+          $("calc-mensual").textContent = fmt(mensual);
           $("calc-unico").textContent = fmt(unico);
           $("calc-unico-row").classList.toggle("hidden", unico === 0);
+
+          // Inversión total: los checkbox de Ads reflejan "Arma tu plan"
+          const on = {};
+          adsOpts.forEach((a) => {
+            a.checked = opts.some((o) => o.dataset.mod === a.dataset.mod && o.checked);
+            on[a.dataset.plat] = a.checked;
+          });
+          const nivel = nivelOpts.find((n) => n.checked);
+          const plat = on.meta && on.tiktok ? "ambos" : on.meta ? "meta" : on.tiktok ? "tiktok" : null;
+          const ads = nivel && plat ? Number(nivel.dataset[plat]) : 0;
+          $("ads-monto").textContent = fmt(ads);
+          // Reparto sugerido con ambas plataformas: 2/3 Meta Ads y 1/3 TikTok Ads
+          const meta = plat === "ambos" ? Math.round((ads * 2) / 3) : on.meta ? ads : 0;
+          const tiktok = ads - meta;
+          // En PC (lg) TikTok va debajo de Meta; en móvil se mantiene en línea con " | "
+          $("ads-split").innerHTML = !ads
+            ? ""
+            : plat === "ambos"
+              ? `Meta Ads: ${fmt(meta)}<span class="lg:hidden"> | </span><span class="lg:block">TikTok Ads: ${fmt(tiktok)}</span>`
+              : plat === "meta" ? `Meta Ads: ${fmt(meta)}` : `TikTok Ads: ${fmt(tiktok)}`;
+          $("ads-total").textContent = fmt(ads + mensual);
         }
+
+        const adsOpts = [...document.querySelectorAll(".ads-opt")];
+        const nivelOpts = [...document.querySelectorAll(".nivel-opt")];
+        adsOpts.forEach((a) =>
+          a.addEventListener("change", () => {
+            opts.forEach((o) => {
+              if (o.dataset.mod === a.dataset.mod) o.checked = a.checked;
+            });
+            update();
+          })
+        );
+        nivelOpts.forEach((n) => n.addEventListener("change", update));
 
         opts.forEach((o) =>
           o.addEventListener("change", () => {
