@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A single-page commercial proposal ("Propuesta Aldea Quinquén") for AMSAC's off-grid parcel project, built as a static Astro site styled like an executive dashboard. All copy is in Spanish and all prices are in **CLP**. It is deployed to GitHub Pages at **quinquen.matiaslaporta.com**. SEO is intentionally omitted — this is a private proposal, not an indexed site.
+A single-page commercial proposal ("Propuesta Aldea Quinquén") for AMSAG's off-grid parcel project, built as a static Astro site styled like an executive dashboard. All copy is in Spanish and all prices are in **CLP**. It is deployed to GitHub Pages at **quinquen.matiaslaporta.com**. SEO is intentionally omitted — this is a private proposal, not an indexed site.
 
 The project was forked from an earlier proposal (Kargo-Log); the `package.json` name and a few `public/` assets still carry that name. That is leftover, not a second client.
 
